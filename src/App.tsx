@@ -1,34 +1,65 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { Button, Typography } from '@material-ui/core';
+import { logger } from './logger/logger';
+import { getLoggerState } from './logger/loggerStore';
+import { nuclear } from './testObjects';
+import { worker } from './mocks/browser';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export function App(): JSX.Element {
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div style={{ margin: 10 }}>
+      <Typography>Splunk HEC mock</Typography>
+      <div style={{ display: 'flex', gap: 10 }}>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            worker.start({
+              onUnhandledRequest: 'bypass',
+              serviceWorker: { url: `${import.meta.env.BASE_URL}mockServiceWorker.js` },
+            });
+          }}
+        >
+          enable
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            worker.stop();
+          }}
+        >
+          disable
+        </Button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
-}
+      <br />
+      <Typography>Invoke logger</Typography>
 
-export default App
+      <div style={{ display: 'flex', gap: 10 }}>
+        <Button variant="outlined" onClick={() => logger.debug('all systems nominal.', nuclear)}>
+          debug
+        </Button>
+        <Button variant="outlined" onClick={() => logger.info('neutron levels elevated.', nuclear)}>
+          info
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={() =>
+            logger.warn('approaching critical limit, fire control rods immediately.', nuclear)
+          }
+        >
+          warn
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={() => logger.error('meltdown imminent, evacuate.', nuclear)}
+        >
+          error
+        </Button>
+        <Button variant="outlined" onClick={() => console.log(getLoggerState())}>
+          output loggerStore
+        </Button>
+        <Button variant="outlined" onClick={() => getLoggerState().forwardEventsToSplunk()}>
+          fwd to splunk
+        </Button>
+      </div>
+    </div>
+  );
+}
