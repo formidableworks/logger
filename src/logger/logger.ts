@@ -1,11 +1,10 @@
-import merge from 'lodash/merge';
 import { LogItem, LoggerOptions, Metadata, Message, AdjustableOpts } from './logger.types';
 import { getBaseOptions } from './config';
 import { handleConsole, handleSnackbar, handleSplunk } from './outputPipes';
 
 function log(logItem: LogItem, options?: AdjustableOpts): void {
   const baseLoggerOptions: LoggerOptions = getBaseOptions();
-  const mergedOptions = merge(baseLoggerOptions, options);
+  const mergedOptions = { ...baseLoggerOptions, ...options };
 
   handleConsole(logItem, mergedOptions);
   handleSnackbar(logItem, mergedOptions);

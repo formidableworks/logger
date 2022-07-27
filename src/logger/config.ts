@@ -15,7 +15,7 @@ const productionOptions: LoggerOptions = {
   snackbar: true,
   consoleTrace: false,
   snackbarSelectorPrefix: undefined,
-  loglevel: 'error',
+  loglevel: 'debug', // set to debug for demo purposes.
 };
 
 export function getBaseOptions(): LoggerOptions {

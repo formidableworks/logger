@@ -26,7 +26,7 @@ export interface LoggerOptions {
   console: boolean;
 
   /**
-   * Use [console.trace](https://developer.mozilla.org/en-US/docs/Web/API/console/trace) when outputting to console.
+   * Additionally use [console.trace](https://developer.mozilla.org/en-US/docs/Web/API/console/trace) when outputting to console.
    * can be useful to trace function invocation.
    * - production default: `false`.
    * - development default: `false`.

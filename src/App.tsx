@@ -1,65 +1,56 @@
-import { Button, Typography } from '@material-ui/core';
-import { logger } from './logger/logger';
-import { getLoggerState } from './logger/loggerStore';
-import { nuclear } from './testObjects';
-import { worker } from './mocks/browser';
+import { Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { DebugControls } from './DebugControls';
+import { Demo } from './Demo';
+import { KitchenSink } from './KitchenSink';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    margin: theme.spacing(2),
+  },
+  buttonContainer: {
+    display: 'flex',
+    gap: theme.spacing(2),
+  },
+}));
 
 export function App(): JSX.Element {
+  const classes = useStyles();
   return (
-    <div style={{ margin: 10 }}>
-      <Typography>Splunk HEC mock</Typography>
-      <div style={{ display: 'flex', gap: 10 }}>
-        <Button
-          variant="outlined"
-          onClick={() => {
-            worker.start({
-              onUnhandledRequest: 'bypass',
-              serviceWorker: { url: `${import.meta.env.BASE_URL}mockServiceWorker.js` },
-            });
-          }}
-        >
-          enable
-        </Button>
-        <Button
-          variant="outlined"
-          onClick={() => {
-            worker.stop();
-          }}
-        >
-          disable
-        </Button>
-      </div>
+    <div className={classes.root}>
+      <Typography variant="h2">Logger Demo</Typography>
+      <Typography variant="h5">Simple frontend logger.</Typography>
+      <ul>
+        <li>
+          API was designed with sensible defaults but can also be easily overidden on a per-call
+          basis.
+        </li>
+        <li>Current outputs are browser console, material-ui snackbar, Splunk HEC.</li>
+        <li>Custom snackbar with metadata inspector for technical end-users.</li>
+        <li>Built to play nice with material-ui@4.0.0^ and notistack@latest-mui-v4.</li>
+        <li>Log events will be stored and push to splunk periodically.</li>
+        <li>All logger commands have type-ahead for improved DX. &#10084; TypeScript.</li>
+      </ul>
+      <Typography variant="h5">Demo</Typography>
+      <Typography>
+        Open the browsers console to see logger output and intercepted network requests.
+      </Typography>
+      <Demo />
       <br />
-      <Typography>Invoke logger</Typography>
-
-      <div style={{ display: 'flex', gap: 10 }}>
-        <Button variant="outlined" onClick={() => logger.debug('all systems nominal.', nuclear)}>
-          debug
-        </Button>
-        <Button variant="outlined" onClick={() => logger.info('neutron levels elevated.', nuclear)}>
-          info
-        </Button>
-        <Button
-          variant="outlined"
-          onClick={() =>
-            logger.warn('approaching critical limit, fire control rods immediately.', nuclear)
-          }
-        >
-          warn
-        </Button>
-        <Button
-          variant="outlined"
-          onClick={() => logger.error('meltdown imminent, evacuate.', nuclear)}
-        >
-          error
-        </Button>
-        <Button variant="outlined" onClick={() => console.log(getLoggerState())}>
-          output loggerStore
-        </Button>
-        <Button variant="outlined" onClick={() => getLoggerState().forwardEventsToSplunk()}>
-          fwd to splunk
-        </Button>
-      </div>
+      <Typography variant="h5">Debug controls</Typography>
+      <DebugControls />
+      <br />
+      <Typography variant="h5">Kitchen sink</Typography>
+      <KitchenSink />
+      <br />
+      <Typography variant="h5">To Do</Typography>
+      <ul>
+        <li>
+          Add a serialisable check/transform to metadata. -- unserialisable data will cause issues
+          when calling JSON.stringify before pushing to splunk.
+        </li>
+        <li>Tweak metadata inspector hover and active colours.</li>
+      </ul>
     </div>
   );
 }
