@@ -6,7 +6,8 @@ import { KitchenSink } from './KitchenSink';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: theme.spacing(2),
+    margin: 'auto',
+    maxWidth: theme.breakpoints.values.md,
   },
   buttonContainer: {
     display: 'flex',
@@ -21,13 +22,11 @@ export function App(): JSX.Element {
       <Typography variant="h2">Logger Demo</Typography>
       <Typography variant="h5">Simple frontend logger.</Typography>
       <ul>
-        <li>
-          API was designed with sensible defaults but can also be easily overidden on a per-call
-          basis.
-        </li>
+        <li>API has sensible defaults but can also be overidden on a per-call basis.</li>
+        <li>Can be invoked from React or JavaScript.</li>
         <li>Current outputs are browser console, material-ui snackbar, Splunk HEC.</li>
         <li>Custom snackbar with metadata inspector for technical end-users.</li>
-        <li>Built to play nice with material-ui@4.0.0^ and notistack@latest-mui-v4.</li>
+        <li>Plays nice with material-ui@4.0.0^ and notistack@latest-mui-v4.</li>
         <li>Log events will be stored and push to splunk periodically.</li>
         <li>All logger commands have type-ahead for improved DX. &#10084; TypeScript.</li>
       </ul>

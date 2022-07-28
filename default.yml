@@ -1,0 +1,13 @@
+# config file for splunk -- referenced via docker-compose.yml
+# https://github.com/splunk/splunk-ansible/blob/develop/docs/advanced/default.yml.spec.md#configuration-files
+splunk:
+  hec:
+    ssl: false
+    token: dead-beef-111-222
+  conf:
+    - key: inputs
+      value:
+        directory: /opt/splunk/etc/system/local
+        content:
+          http:
+            crossOriginSharingPolicy: "*"
