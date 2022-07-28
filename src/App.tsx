@@ -8,6 +8,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     margin: 'auto',
     maxWidth: theme.breakpoints.values.md,
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
   },
   buttonContainer: {
     display: 'flex',
