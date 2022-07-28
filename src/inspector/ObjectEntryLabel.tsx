@@ -66,17 +66,14 @@ const useStyles = makeStyles((theme) => ({
   key: {
     color: lightBlue[500],
     marginRight: theme.spacing(1),
-    fontFamily: 'Roboto Mono',
   },
   value: {
     color: teal.A400,
     marginRight: theme.spacing(1),
-    fontFamily: 'Roboto Mono',
   },
   token: {
     color: purple.A100,
     marginRight: theme.spacing(1),
-    fontFamily: 'Roboto Mono',
   },
 }));
 

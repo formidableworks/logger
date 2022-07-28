@@ -50,7 +50,6 @@ export function App(): JSX.Element {
           Add a serialisable check/transform to metadata. -- unserialisable data will cause issues
           when calling JSON.stringify before pushing to splunk.
         </li>
-        <li>Tweak metadata inspector hover and active colours.</li>
       </ul>
     </div>
   );
